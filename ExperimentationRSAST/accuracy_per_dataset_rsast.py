@@ -75,11 +75,8 @@ ds_sens = tsc_dataset_names.univariate_equal_length
 #ds_sens = ['ACSF1', 'Adiac', 'ArrowHead', 'Beef', 'BeetleFly', 'BirdChicken', 'BME', 'Car', 'CBF', 'Chinatown', 'ChlorineConcentration', 'CinCECGTorso', 'Coffee']
 
 
-ds_sens = ['SmoothSubspace', 'SonyAIBORobotSurface2', 'GunPoint',
-       'ItalyPowerDemand', 'DistalPhalanxOutlineCorrect',
-       'DistalPhalanxOutlineAgeGroup', 'ShapeletSim', 'SyntheticControl',
-       'SonyAIBORobotSurface1', 'Chinatown', 'Coffee', 'BirdChicken']
-ds_sens = ['Chinatown']       
+ds_sens = [ 'SonyAIBORobotSurface2', 'GunPoint', 'Chinatown', 'DistalPhalanxOutlineCorrect', 'DistalPhalanxOutlineAgeGroup', 'SmoothSubspace', 'Coffee', 'ShapeletSim', 'ItalyPowerDemand', 'SyntheticControl']
+    
 max_ds=len(ds_sens) #exploring dataset in UEA & UCR Time Series Classification Repository
 print(max_ds)
 print(ds_sens)

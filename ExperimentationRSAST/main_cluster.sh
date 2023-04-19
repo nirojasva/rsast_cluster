@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=rsast_project
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=400
 #SBATCH --time=1:00:00
-#SBATCH --mem-per-cpu=4G
+#SBATCH --mem-per-cpu=400G
 
 # Activate the Python virtual environment
 source rsast_env/bin/activate

@@ -1,0 +1,5 @@
+,accuracy,time,cweights_time,fsubsequence_time,tdataset_time,tclassifier_time,dataset_name,classifier_name,rpoint,nb_per_class,method,len_method
+0,0.9013641133263379,1.9774420261383057,0.026639938354492188,0.10494494438171387,1.837597131729126,0.006793022155761719,SonyAIBORobotSurface2,ACF&PACF: n_random_points=1000 nb_inst_per_class=(max instances per class)//2,1000,(max instances per class)//2,Rsast,ACF&PACF
+1,0.9097586568730325,2.4259936809539795,0.015819787979125977,0.16571450233459473,2.2365660667419434,0.0034644603729248047,SonyAIBORobotSurface2,ACF&PACF: n_random_points= (lenthg ts)//2 nb_inst_per_class=1000,(lenthg ts)//2,1000,Rsast,ACF&PACF
+2,0.8908709338929696,1.541917085647583,0.03033590316772461,0.09023118019104004,1.4147019386291504,0.005480766296386719,SonyAIBORobotSurface2,ACF&PACF: n_random_points=10000 nb_inst_per_class=(max instances per class)//2,10000,(max instances per class)//2,Rsast,ACF&PACF
+3,0.9076600209863589,2.4303534030914307,0.018005847930908203,0.17826604843139648,2.2256710529327393,0.006546497344970703,SonyAIBORobotSurface2,ACF&PACF: n_random_points= (lenthg ts)//2 nb_inst_per_class=10000,(lenthg ts)//2,10000,Rsast,ACF&PACF

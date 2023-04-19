@@ -1,0 +1,5 @@
+,accuracy,time,cweights_time,fsubsequence_time,tdataset_time,tclassifier_time,dataset_name,classifier_name,rpoint,nb_per_class,method,len_method
+0,0.9795918367346939,0.11604690551757812,0.011393070220947266,0.032338619232177734,0.059888362884521484,0.011757135391235352,Chinatown,ACF&PACF: n_random_points=1000 nb_inst_per_class=(max instances per class)//2,1000,(max instances per class)//2,Rsast,ACF&PACF
+1,0.9854227405247813,0.16366052627563477,0.007845878601074219,0.05297660827636719,0.09066390991210938,0.011691570281982422,Chinatown,ACF&PACF: n_random_points= (lenthg ts)//2 nb_inst_per_class=1000,(lenthg ts)//2,1000,Rsast,ACF&PACF
+2,0.9825072886297376,0.11708402633666992,0.007496833801269531,0.019860506057739258,0.06912016868591309,0.019461631774902344,Chinatown,ACF&PACF: n_random_points=10000 nb_inst_per_class=(max instances per class)//2,10000,(max instances per class)//2,Rsast,ACF&PACF
+3,0.9854227405247813,0.11563253402709961,0.006283998489379883,0.0366666316986084,0.06899785995483398,0.003190279006958008,Chinatown,ACF&PACF: n_random_points= (lenthg ts)//2 nb_inst_per_class=10000,(lenthg ts)//2,10000,Rsast,ACF&PACF

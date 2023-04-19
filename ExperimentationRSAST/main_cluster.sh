@@ -1,9 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name=rsast_project
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=400
-#SBATCH --time=1:00:00
-#SBATCH --mem-per-cpu=400G
+
+#SBATCH --partition=normal    # choix de la partition où soumettre le job
+#SBATCH --time=1:00:00          # temps max alloué au job (format = m:s ou h:m:s ou j-h:m:s)
+#SBATCH --ntasks=4            # nb de tasks total pour le job
+#SBATCH --cpus-per-task=400     # 1 seul CPU pour une task
+#SBATCH --mem=400            # mémoire nécessaire (par noeud) en Mo
+ 
 
 # Activate the Python virtual environment
 source rsast_env/bin/activate

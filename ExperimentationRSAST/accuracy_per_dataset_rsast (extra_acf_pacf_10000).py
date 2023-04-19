@@ -50,6 +50,8 @@ file_path = os.getcwd()+"/cd_diagram"
 sys.path.append(file_path)
 
 sys.path
+os.chdir(os.getcwd()+"/ExperimentationRSAST")
+os.getcwd()
 
 
 

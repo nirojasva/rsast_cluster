@@ -75,7 +75,7 @@ ds_sens = tsc_dataset_names.univariate_equal_length
 #ds_sens = ['ACSF1', 'Adiac', 'ArrowHead', 'Beef', 'BeetleFly', 'BirdChicken', 'BME', 'Car', 'CBF', 'Chinatown', 'ChlorineConcentration', 'CinCECGTorso', 'Coffee']
 
 
-ds_sens = [ 'Chinatown']
+#ds_sens = [ 'Chinatown']
     
 max_ds=len(ds_sens) #exploring dataset in UEA & UCR Time Series Classification Repository
 print(max_ds)
@@ -83,7 +83,7 @@ print(ds_sens)
 
 # %%
 #define numbers of runs of the experiment
-runs = 1
+runs = 5
 
 #define range for number of random points 
 range_rpoint = [1, 10, 30, 50, 100, 1000, 10000]

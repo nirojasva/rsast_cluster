@@ -79,7 +79,7 @@ print(ds_sens)
 
 # %%
 #define numbers of runs of the experiment
-runs = 3
+runs = 5
 
 #define range for number of random points 
 range_rpoint = [1000, 10000]

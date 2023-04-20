@@ -81,7 +81,7 @@ print(ds_sens)
 
 # %%
 #define numbers of runs of the experiment
-runs = 3
+runs = 5
 
 #define range for number of random points and intances per class
 range_exp = [1000, 10000]

@@ -68,8 +68,15 @@ import pandas as pd
 # It is runned RSAST in a set of UCR datasets with a predefined number of runs ("runs"). Then, it is selected a range ("range_total") between [1, 10, 30 ,50,100] for the selected dataset.
 
 # %%
-ds_sens = tsc_dataset_names.univariate_equal_length
 
+ds_sens=pd.read_excel("DataSetsUCLASummary.xlsx")
+
+ds_sens=ds_sens[ds_sens['N RUNS S17'].isna()]
+ds_sens=ds_sens[ds_sens['USED SAST']=="Y"]
+ds_sens=ds_sens.Name.unique()
+
+'''
+ds_sens = tsc_dataset_names.univariate_equal_length
 list_remove=["SmoothSubspace","Chinatown","ItalyPowerDemand","SyntheticControl","SonyAIBORobotSurface2","DistalPhalanxOutlineAgeGroup","DistalPhalanxOutlineCorrect","GunPoint","Fungi","Coffee","ShapeletSim"]
 
 # using set() to perform task
@@ -77,7 +84,7 @@ set1 = set(ds_sens)
 set2 = set(list_remove)
 
 ds_sens = list(set1 - set2)
-
+'''
 
 
 

@@ -50,7 +50,7 @@ file_path = os.getcwd()+"/cd_diagram"
 sys.path.append(file_path)
 
 sys.path
-os.chdir(os.getcwd()+"/ExperimentationRSAST")
+#os.chdir(os.getcwd()+"/ExperimentationRSAST")
 os.getcwd()
 
 
@@ -70,20 +70,30 @@ import pandas as pd
 # %%
 ds_sens = tsc_dataset_names.univariate_equal_length
 
+list_remove=["SmoothSubspace","Chinatown","ItalyPowerDemand","SyntheticControl","SonyAIBORobotSurface2","DistalPhalanxOutlineAgeGroup","DistalPhalanxOutlineCorrect","GunPoint","Fungi","Coffee","ShapeletSim"]
+
+# using set() to perform task
+set1 = set(ds_sens)
+set2 = set(list_remove)
+
+ds_sens = list(set1 - set2)
+
+
 
 
 #ds_sens = ['ACSF1', 'Adiac', 'ArrowHead', 'Beef', 'BeetleFly', 'BirdChicken', 'BME', 'Car', 'CBF', 'Chinatown', 'ChlorineConcentration', 'CinCECGTorso', 'Coffee']
 
 
 #ds_sens = [ 'Chinatown']
-    
+
+
 max_ds=len(ds_sens) #exploring dataset in UEA & UCR Time Series Classification Repository
 print(max_ds)
 print(ds_sens)
 
 # %%
 #define numbers of runs of the experiment
-runs = 5
+runs = 1
 
 #define range for number of random points 
 range_rpoint = [1, 10, 30, 50, 100, 1000, 10000]

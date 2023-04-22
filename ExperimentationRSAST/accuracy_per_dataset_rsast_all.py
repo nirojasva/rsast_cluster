@@ -91,7 +91,7 @@ ds_sens = list(set1 - set2)
 #ds_sens = ['ACSF1', 'Adiac', 'ArrowHead', 'Beef', 'BeetleFly', 'BirdChicken', 'BME', 'Car', 'CBF', 'Chinatown', 'ChlorineConcentration', 'CinCECGTorso', 'Coffee']
 
 
-#ds_sens = [ 'Chinatown']
+ds_sens = [ 'Chinatown']
 
 
 max_ds=len(ds_sens) #exploring dataset in UEA & UCR Time Series Classification Repository
@@ -106,7 +106,7 @@ runs = 2
 range_rpoint = [1, 10, 30, 50, 100, 1000, 10000]
 
 #define range for number of intances per class
-range_nb_inst_per_class=[1, 10, 30, 50, 1000, 10000]
+range_nb_inst_per_class=[1, 10, 30, 50, 100, 1000, 10000]
 
 #define range for number of random points and intances per class 
 range_exp = [1, 10, 30, 50, 100, 1000, 10000]

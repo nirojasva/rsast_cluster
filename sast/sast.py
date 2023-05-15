@@ -32,6 +32,9 @@ from statsmodels.tsa.stattools import acf,pacf
 import warnings
 import time
 
+import os
+from operator import itemgetter
+
 def from_2d_array_to_nested(
     X, index=None, columns=None, time_index=None, cells_as_numpy=False
 ):
@@ -428,7 +431,9 @@ class RSAST(BaseEstimator, ClassifierMixin):
                             self.cand_length_list[c+","+str(idx)+","+str(rep)].append(j)
                             prev_pacf=j 
                             
-                   
+                if (self.len_method == "all"):
+                    self.cand_length_list[c+","+str(idx)+","+str(rep)].extend(np.arange(3,1+ len(X_c[idx])))
+                
                 #2.3-- Save the maximum autocorralated lag value as shapelet lenght 
                 if len(non_zero_pacf)==0 and len(non_zero_acf)==0:
                     #chose a random lenght using the lenght of the time series (added 1 since the range start in 0)
@@ -546,42 +551,33 @@ class RSAST(BaseEstimator, ClassifierMixin):
 
 
 if __name__ == "__main__":
-    X_train = np.arange(10, dtype=np.float32).reshape((2, 5))
-    y_train = np.array([0, 1])
-
-    X_test = np.arange(10, dtype=np.float32).reshape((2, 5))
-    y_test = np.array([0, 1])
-    # SAST
-    sast = SAST(cand_length_list=np.arange(2, 5),
-                nb_inst_per_class=1, classifier=RidgeClassifierCV())
-
-    #sast.fit(X_train, y_train)
-
-    #print('kernel:\n', sast.kernels_)
-
-    #print('Proba:', sast.predict_proba(a))
-
-    #print('score:', sast.score(a, y))
-
-    # SASTEnsemble
-    saste = SASTEnsemble(cand_length_list=[np.arange(2, 4), np.arange(
-        4, 6)], nb_inst_per_class=2, classifier=RidgeClassifierCV(alphas=np.logspace(-3, 3, 10)))
-
-    saste.fit(X_train, y_train)
-
-    #print('SASTEnsemble Proba:', sast.predict_proba(a))
-
-    #print('SASTEnsemble score:', sast.score(X_train, y_train))
     from sktime.datasets import load_UCR_UEA_dataset
     import time
-    ds='Chinatown' # Chosing a dataset from # Number of classes to consider
+    ds='MedicalImages' # Chosing a dataset from # Number of classes to consider
 
     X_train, y_train = load_UCR_UEA_dataset(name=ds, extract_path='data', split="train", return_type="numpy2d")
     X_test, y_test = load_UCR_UEA_dataset(name=ds, extract_path='data', split="test", return_type="numpy2d")
+    #X_train = np.arange(10, dtype=np.float32).reshape((2, 5))
+    #y_train = np.array([0, 1])
+
+    #X_test = np.arange(10, dtype=np.float32).reshape((2, 5))
+    #y_test = np.array([0, 1])
     
+    # SAST
+    start = time.time()
+    sast = SAST(cand_length_list=np.arange(3, len(X_train)),
+                nb_inst_per_class=1, classifier=RidgeClassifierCV())
+
+    sast.fit(X_train, y_train)
+    end = time.time()
+    print('sast score :', sast.score(X_test, y_test))
+    print('duration:', end-start)
+    print('params:', sast.get_params())
+    
+ 
     #print("X_train",X_train)
     #print("X_test",X_test)
-
+    """
     start = time.time()
     random_state = None
     rsast_ridge = RSAST(n_random_points=5,nb_inst_per_class=5, sel_inst_wrepl=False,sel_randp_wrepl=True)
@@ -626,6 +622,14 @@ if __name__ == "__main__":
     print('rsast score (sel_inst_wrepl=False,sel_randp_wrepl=False) half instance half len:', rsast_ridge.score(X_test, y_test))
     print('duration:', end-start)
     print('params:', rsast_ridge.get_params())
+    """
+    start = time.time()
+    random_state = None
+    rsast_ridge = RSAST(n_random_points=10,nb_inst_per_class=10, len_method="all")
+    rsast_ridge.fit(X_train, y_train)
+    end = time.time()
+    print('rsast score :', rsast_ridge.score(X_test, y_test))
+    print('duration:', end-start)
+    print('params:', rsast_ridge.get_params())
     
-
 

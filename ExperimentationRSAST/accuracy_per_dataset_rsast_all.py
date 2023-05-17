@@ -71,7 +71,7 @@ import pandas as pd
 
 ds_sens=pd.read_excel("DataSetsUCLASummary.xlsx")
 
-ds_sens=ds_sens[ds_sens['N RUNS S17'].isna()]
+ds_sens=ds_sens[ds_sens['N RUNS S17_SAST_DS'].isna()]
 ds_sens=ds_sens[ds_sens['USED SAST']=="Y"]
 ds_sens=ds_sens.Name.unique()
 
@@ -88,12 +88,6 @@ ds_sens = list(set1 - set2)
 
 
 
-ds_sens1 = ['SmoothSubspace', 'Car', 'ECG5000']
-
-ds_sens2 = ['ToeSegmentation2', 'ItalyPowerDemand','Crop']
-
-ds_sens=ds_sens1
-
 #ds_sens = [ 'Chinatown']
 
 
@@ -105,14 +99,15 @@ print(ds_sens)
 #define numbers of runs of the experiment
 runs = 5
 
+
 #define range for number of random points 
-range_rpoint = [1, 10, 30, 50, 100]
+range_rpoint = [10, 30]
 
 #define range for number of intances per class
-range_nb_inst_per_class=[1, 10, 30, 50]
+range_nb_inst_per_class=[1, 10]
 
 #define range for number of random points and intances per class 
-range_exp = [1, 10, 30, 50, 100]
+range_exp = [1, 10, 30]
 
 
 

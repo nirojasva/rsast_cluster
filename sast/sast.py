@@ -29,7 +29,7 @@ import pandas as pd
 
 from scipy.stats import f_oneway
 from statsmodels.tsa.stattools import acf,pacf
-import warnings
+
 import time
 
 import os
@@ -435,7 +435,8 @@ class RSAST(BaseEstimator, ClassifierMixin):
                     self.cand_length_list[c+","+str(idx)+","+str(rep)].extend(np.arange(3,1+ len(X_c[idx])))
                 
                 #2.3-- Save the maximum autocorralated lag value as shapelet lenght 
-                if len(non_zero_pacf)==0 and len(non_zero_acf)==0:
+                
+                if len(self.cand_length_list[c+","+str(idx)+","+str(rep)])==0:
                     #chose a random lenght using the lenght of the time series (added 1 since the range start in 0)
                     rand_value= self.random_state.choice(len(X_c[idx]), 1)[0]+1
                     self.cand_length_list[c+","+str(idx)+","+str(rep)].extend([max(3,rand_value)])
@@ -450,7 +451,9 @@ class RSAST(BaseEstimator, ClassifierMixin):
                  
                 #remove duplicates for the list of lenghts
                 self.cand_length_list[c+","+str(idx)+","+str(rep)]=list(set(self.cand_length_list[c+","+str(idx)+","+str(rep)]))
+                #print("Len list:"+str(self.cand_length_list[c+","+str(idx)+","+str(rep)]))
                 for max_shp_length in self.cand_length_list[c+","+str(idx)+","+str(rep)]:
+                    
                     #2.4-- Choose randomly n_random_points point for a TS                
                     #2.5-- calculate the weights of probabilities for a random point in a TS
                     if sum(n) == 0 :
@@ -466,21 +469,28 @@ class RSAST(BaseEstimator, ClassifierMixin):
                     if self.half_len==True:
                         self.n_random_points=np.max([len(X_c[idx])//2, 1]).astype(int)
                     
+                    
                     if self.n_random_points > len(X_c[idx])-max_shp_length+1 and self.sel_randp_wrepl==False:
                         #set a upper limit for the posible of number of random points when selecting without replacement
                         limit_rpoint=len(X_c[idx])-max_shp_length+1
                         rand_point_ts = self.random_state.choice(len(X_c[idx])-max_shp_length+1, limit_rpoint, p=weights, replace=self.sel_randp_wrepl)
+                        #print("limit_rpoint:"+str(limit_rpoint))
                     else:
                         rand_point_ts = self.random_state.choice(len(X_c[idx])-max_shp_length+1, self.n_random_points, p=weights, replace=self.sel_randp_wrepl)
-
+                        #print("n_random_points:"+str(self.n_random_points))
+                    
+                    #print("rpoints:"+str(rand_point_ts))
+                    
                     for i in rand_point_ts:        
                         #2.6-- Extract the subsequence with that point
                         kernel = X_c[idx][i:i+max_shp_length].reshape(1,-1)
+                        #print("kernel:"+str(kernel))
                         if m_kernel<max_shp_length:
                             m_kernel = max_shp_length            
                         list_kernels.append(kernel)
                         self.kernel_orig_.append(np.squeeze(kernel))
         
+        print("total kernels:"+str(len(list_kernels)))
         #3--save the calculated subsequences
         candidates_ts = np.concatenate(candidates_ts, axis=0)
         n, m = candidates_ts.shape
@@ -552,17 +562,41 @@ class RSAST(BaseEstimator, ClassifierMixin):
 
 if __name__ == "__main__":
     from sktime.datasets import load_UCR_UEA_dataset
+    from utils_sast import load_dataset, format_dataset
+    
     import time
-    ds='MedicalImages' # Chosing a dataset from # Number of classes to consider
+    ds='DodgerLoopDay' # Chosing a dataset from # Number of classes to consider
 
-    X_train, y_train = load_UCR_UEA_dataset(name=ds, extract_path='data', split="train", return_type="numpy2d")
-    X_test, y_test = load_UCR_UEA_dataset(name=ds, extract_path='data', split="test", return_type="numpy2d")
+    rtype="numpy2d"
+    X_train, y_train = load_UCR_UEA_dataset(name=ds, extract_path='data', split="train", return_type=rtype)
+    X_train=np.nan_to_num(X_train)
+    y_train=np.nan_to_num(y_train)
+    
+    X_test, y_test=load_UCR_UEA_dataset(name=ds, extract_path='data', split="test", return_type=rtype)
+    X_test=np.nan_to_num(X_test)
+    y_test=np.nan_to_num(y_test)
+    #print("ds:"+ds)
+    #X_test, y_test = load_UCR_UEA_dataset(name=ds, extract_path='data', split="test", return_type=rtype)
+    #print("ds:"+ds)
+    #print("X_train:"+X_train)
+
+    ds_folder="/home/nirojasvar/random_sast/ExperimentationRSAST/data/"
+
+    #train_ds, test_ds = load_dataset(ds_folder, ds)
+
+    #X_train, y_train = format_dataset(train_ds, shuffle=True)
+    #X_test, y_test = format_dataset(test_ds)
+    #print("ds:"+ds)
+    
+    #print("X_train:"+str(X_train.sum()))
+    #print("y_train:"+str(np.unique(y_train)))
+
     #X_train = np.arange(10, dtype=np.float32).reshape((2, 5))
     #y_train = np.array([0, 1])
 
     #X_test = np.arange(10, dtype=np.float32).reshape((2, 5))
     #y_test = np.array([0, 1])
-    
+    """
     # SAST
     start = time.time()
     sast = SAST(cand_length_list=np.arange(3, len(X_train)),
@@ -577,7 +611,7 @@ if __name__ == "__main__":
  
     #print("X_train",X_train)
     #print("X_test",X_test)
-    """
+    
     start = time.time()
     random_state = None
     rsast_ridge = RSAST(n_random_points=5,nb_inst_per_class=5, sel_inst_wrepl=False,sel_randp_wrepl=True)
@@ -622,14 +656,16 @@ if __name__ == "__main__":
     print('rsast score (sel_inst_wrepl=False,sel_randp_wrepl=False) half instance half len:', rsast_ridge.score(X_test, y_test))
     print('duration:', end-start)
     print('params:', rsast_ridge.get_params())
+    
+
     """
     start = time.time()
     random_state = None
-    rsast_ridge = RSAST(n_random_points=10,nb_inst_per_class=10, len_method="all")
+    rsast_ridge = RSAST(n_random_points=10,nb_inst_per_class=10, len_method="both")
     rsast_ridge.fit(X_train, y_train)
     end = time.time()
     print('rsast score :', rsast_ridge.score(X_test, y_test))
     print('duration:', end-start)
-    print('params:', rsast_ridge.get_params())
+    print('params:', rsast_ridge.get_params())    
     
 

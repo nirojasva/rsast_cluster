@@ -126,6 +126,11 @@ for ds in ds_sens:
     try:    
         X_train, y_train = load_UCR_UEA_dataset(name=ds, extract_path='data', split="train", return_type="numpy2d")
         X_test, y_test = load_UCR_UEA_dataset(name=ds, extract_path='data', split="test", return_type="numpy2d")
+
+        X_train=np.nan_to_num(X_train)
+        y_train=np.nan_to_num(y_train)
+        X_test=np.nan_to_num(X_test)
+        y_test=np.nan_to_num(y_test)
         print("ds="+ds)
     except:
         print("not found ds="+ds)
